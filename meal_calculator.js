@@ -86,7 +86,7 @@ console.log("The total bill is $", billData.totalBill.toFixed(2));
 
 console.log("The breakdown per diner is:");
 
-for(diner in billData.breakdown) {
+for(var diner in billData.breakdown) {
     console.log(util.format('%s paid %s (subtotal: $%s tax: $%s tip: $%s',
             diner,
             billData.breakdown[diner].totalCost.toFixed(2),

@@ -1,4 +1,4 @@
-
+var util = require('util');
 
 var Diner = function(name, meal) {
     this.name = name;
@@ -17,7 +17,6 @@ Diner.prototype.cost = function() {
 
     return totalCost;
 };
-
 
 
 var Dish = function(name, cost) {
@@ -51,6 +50,7 @@ function calculateTotalBill(diners, taxPercentage, tipPercentage) {
 
     var perDinerTip = totalTip / diners.length;
     for(var diner in breakdown) {
+        breakdown[diner].tip = perDinerTip;
         breakdown[diner].tax = breakdown[diner].cost * ( taxPercentage / 100);
         breakdown[diner].totalCost = breakdown[diner].cost + breakdown[diner].tax + perDinerTip;
     }
@@ -70,16 +70,27 @@ var milkShake = new Dish('Milk Shake', 5);
 var jay = new Diner('Jay');
 jay.addDish(salad);
 
-var christie = new Diner('Christie', [burger, fries]);
-christie.addDish(new Dish('Iced Tea', 2.05));
+var alice = new Diner('Alice', [burger, fries]);
+alice.addDish(new Dish('Iced Tea', 2.05));
 
-var paul = new Diner('Paul');
-paul.addDish(burger);
-paul.addDish(fries);
-paul.addDish(beer);
+var bob = new Diner('Bob');
+bob.addDish(burger);
+bob.addDish(fries);
+bob.addDish(beer);
 
-var shan = new Diner('Shan', [burger, fries, milkShake]);
+var carol = new Diner('Carol', [burger, fries, milkShake]);
 
-var billData = calculateTotalBill([jay, christie, paul, shan], 7, 20);
+var billData = calculateTotalBill([jay, alice, bob, carol], 7, 20);
 
-console.log(billData);
+console.log("The total bill is $", billData.totalBill.toFixed(2));
+
+console.log("The breakdown per diner is:");
+
+for(diner in billData.breakdown) {
+    console.log(util.format('%s paid %s (subtotal: $%s tax: $%s tip: $%s',
+            diner,
+            billData.breakdown[diner].totalCost.toFixed(2),
+            billData.breakdown[diner].cost.toFixed(2),
+            billData.breakdown[diner].tax.toFixed(2),
+            billData.breakdown[diner].tip.toFixed(2)));
+}

@@ -4,8 +4,8 @@
 
 var assert = require('assert');
 var meal_calculator = require('../lib/meal_calculator');
-var Dish = meal_calculator.Dish;
-var Diner = meal_calculator.Diner;
+var Dish = require('../lib/Dish');
+var Diner = require('../lib/Diner');
 
 describe('Class tests', function() {
     it('should be able to create a Dish', function() {
